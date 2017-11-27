@@ -10,6 +10,11 @@ public class ConnectorFacade {
     private BeerDataProvider beerDataProvider;
     private BeerDataSender beerDataSender;
 
+    public ConnectorFacade() {
+        this.beerDataProvider = new FixedProvider();
+        this.beerDataSender = new EmptySender();
+    }
+
     public void addBeer(Beer beer){
         beerDataSender.addBeer(beer);
     }
