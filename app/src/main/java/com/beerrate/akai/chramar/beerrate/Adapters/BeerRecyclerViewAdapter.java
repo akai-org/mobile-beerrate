@@ -1,6 +1,8 @@
 package com.beerrate.akai.chramar.beerrate.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.beerrate.akai.chramar.beerrate.R;
+import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.List;
 
@@ -29,7 +32,9 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
 
     @Override
     public BeerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View row = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_row, parent, false);
+        return new BeerViewHolder(row);
     }
 
     /*Metoda ustawiająca wygląd poszczególnych itemów w recyclerView
@@ -37,7 +42,7 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
      */
     @Override
     public void onBindViewHolder(BeerViewHolder holder, int position) {
-        Beer beer = beerList.get(position);
+        /*Beer beer = beerList.get(position);
         holder.row_name_textView.setText(beer.getName());
         float name_width = holder.row_name_textView.getMeasuredWidth();
         float name_height = holder.row_name_textView.getMeasuredHeight();
@@ -78,7 +83,7 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
         holder.row_place_textView.setText("Place: " + beer.getPlace());
         holder.row_ibu_textView.setText("IBU: " + beer.getIBU());
         holder.row_alc_textView.setText("Alc: " + beer.getAlc());
-
+        */
 
     }
 
@@ -107,20 +112,20 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
 
         public BeerViewHolder(View itemView) {
             super(itemView);
-            row_imageView = itemView.findViewById(R.id.row_imageView);
+            row_imageView = (ImageView) itemView.findViewById(R.id.row_imageView);
 
-            row_name_textView = itemView.findViewById(R.id.row_name_textView);
-            row_brawery_textView = itemView.findViewById(R.id.row_brewery_textView);
-            row_style_textView = itemView.findViewById(R.id.row_style_textView);
-            row_price_textView = itemView.findViewById(R.id.row_price_textView);
-            row_place_textView = itemView.findViewById(R.id.row_place_textView);
-            row_ibu_textView = itemView.findViewById(R.id.row_ibu_textView);
-            row_alc_textView = itemView.findViewById(R.id.row_alc_textView);
+            row_name_textView = (TextView) itemView.findViewById(R.id.row_name_textView);
+            row_brawery_textView = (TextView) itemView.findViewById(R.id.row_brewery_textView);
+            row_style_textView = (TextView) itemView.findViewById(R.id.row_style_textView);
+            row_price_textView = (TextView) itemView.findViewById(R.id.row_price_textView);
+            row_place_textView = (TextView) itemView.findViewById(R.id.row_place_textView);
+            row_ibu_textView = (TextView) itemView.findViewById(R.id.row_ibu_textView);
+            row_alc_textView = (TextView) itemView.findViewById(R.id.row_alc_textView);
 
-            row_ratingBar = itemView.findViewById(R.id.row_ratingbar);
+            row_ratingBar = (RatingBar) itemView.findViewById(R.id.row_ratingbar);
 
-            row_style_price_LL = itemView.findViewById(R.id.row_style_price_LL);
-            row_place_ibu_alc_LL = itemView.findViewById(R.id.row_place_ibu_alc_LL);
+            row_style_price_LL = (LinearLayout) itemView.findViewById(R.id.row_style_price_LL);
+            row_place_ibu_alc_LL = (LinearLayout) itemView.findViewById(R.id.row_place_ibu_alc_LL);
 
         }
     }

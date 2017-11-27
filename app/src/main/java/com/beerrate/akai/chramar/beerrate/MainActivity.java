@@ -1,5 +1,6 @@
 package com.beerrate.akai.chramar.beerrate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            Intent recycler = new Intent(this, ListActivity.class);
+            startActivity(recycler);
 
         } else if (id == R.id.nav_slideshow) {
 
