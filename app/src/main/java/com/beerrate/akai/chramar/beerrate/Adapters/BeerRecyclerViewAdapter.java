@@ -10,25 +10,82 @@ import android.widget.TextView;
 
 import com.beerrate.akai.chramar.beerrate.R;
 
+import java.util.List;
+
 /**
  * Created by Dominik on 27.11.2017.
  */
 
 public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerViewAdapter.BeerViewHolder> {
 
+    private List<Beer> beerList;
+    private float density;
+
+    ///Konstruktoe ustaiwający listę piw i współczynnik density odpowiedni dla ekranu użytkownika
+    public BeerRecyclerViewAdapter(List<Beer> beerList, float density){
+        this.beerList = beerList;
+        this.density = density;
+    }
+
     @Override
     public BeerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
+    /*Metoda ustawiająca wygląd poszczególnych itemów w recyclerView
+    ustawia ona teksty oraz ilość gwiazdek w ratingBar'ze
+     */
     @Override
     public void onBindViewHolder(BeerViewHolder holder, int position) {
+        Beer beer = beerList.get(position);
+        holder.row_name_textView.setText(beer.getName());
+        float name_width = holder.row_name_textView.getMeasuredWidth();
+        float name_height = holder.row_name_textView.getMeasuredHeight();
+
+        ViewGroup.MarginLayoutParams brawery_margin =
+                (ViewGroup.MarginLayoutParams) holder.row_brawery_textView.getLayoutParams();
+        brawery_margin.leftMargin = (int) (name_width + convertDpToPx(115));
+        holder.row_brawery_textView.setLayoutParams(brawery_margin);
+        holder.row_brawery_textView.requestLayout();
+        holder.row_brawery_textView.setText(beer.getBrawery());
+
+        ViewGroup.MarginLayoutParams ratingBar_margin =
+                (ViewGroup.MarginLayoutParams) holder.row_ratingBar.getLayoutParams();
+        ratingBar_margin.topMargin = (int)(name_height + convertDpToPx(24));
+        holder.row_ratingBar.setLayoutParams(ratingBar_margin);
+        holder.row_ratingBar.requestLayout();
+        holder.row_ratingBar.setRating(beer.getNote());
+
+        float ratingBar_height = holder.row_ratingBar.getMeasuredHeight();
+
+        ViewGroup.MarginLayoutParams sp_ll_margin =
+                (ViewGroup.MarginLayoutParams) holder.row_style_price_LL.getLayoutParams();
+        sp_ll_margin.topMargin = (int) (name_height + ratingBar_height + convertDpToPx(40));
+        holder.row_style_price_LL.setLayoutParams(sp_ll_margin);
+        holder.row_style_price_LL.requestLayout();
+
+        holder.row_style_textView.setText("Style: " + beer.getStyle());
+        holder.row_price_textView.setText("Price: " + beer.getPrice());
+
+        float sp_ll_height = holder.row_style_price_LL.getMeasuredHeight();
+
+        ViewGroup.MarginLayoutParams pia_LL_margin =
+                (ViewGroup.MarginLayoutParams) holder.row_place_ibu_alc_LL.getLayoutParams();
+        pia_LL_margin.topMargin = (int) (name_height + ratingBar_height + sp_ll_height);
+        holder.row_place_ibu_alc_LL.setLayoutParams(pia_LL_margin);
+        holder.row_place_ibu_alc_LL.requestLayout();
+
+        holder.row_place_textView.setText("Place: " + beer.getPlace());
+        holder.row_ibu_textView.setText("IBU: " + beer.getIBU());
+        holder.row_alc_textView.setText("Alc: " + beer.getAlc());
+
 
     }
 
+    ///Metoda zwracająca ilość obiektów Beer na liście beerList
     @Override
     public int getItemCount() {
-        return 0;
+        return beerList.size();
     }
 
     public class BeerViewHolder extends RecyclerView.ViewHolder{
@@ -66,5 +123,10 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
             row_place_ibu_alc_LL = itemView.findViewById(R.id.row_place_ibu_alc_LL);
 
         }
+    }
+
+    public float convertDpToPx(float dp){
+        float px = dp * density;
+        return px;
     }
 }
