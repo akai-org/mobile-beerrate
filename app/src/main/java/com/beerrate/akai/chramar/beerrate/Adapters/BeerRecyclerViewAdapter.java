@@ -1,7 +1,7 @@
 package com.beerrate.akai.chramar.beerrate.Adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.beerrate.akai.chramar.beerrate.R;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +24,10 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
 
     private List<Beer> beerList;
     private float density;
+    public String MY_LOG = "Kossa";
 
     ///Konstruktoe ustaiwający listę piw i współczynnik density odpowiedni dla ekranu użytkownika
-    public BeerRecyclerViewAdapter(List<Beer> beerList, float density){
+    public BeerRecyclerViewAdapter(ArrayList<Beer> beerList, float density){
         this.beerList = beerList;
         this.density = density;
     }
@@ -42,30 +44,29 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
      */
     @Override
     public void onBindViewHolder(BeerViewHolder holder, int position) {
-        /*Beer beer = beerList.get(position);
+        Log.d(MY_LOG, 45 + "Adapter");
+        Beer beer = beerList.get(position);
         holder.row_name_textView.setText(beer.getName());
-        float name_width = holder.row_name_textView.getMeasuredWidth();
-        float name_height = holder.row_name_textView.getMeasuredHeight();
 
         ViewGroup.MarginLayoutParams brawery_margin =
-                (ViewGroup.MarginLayoutParams) holder.row_brawery_textView.getLayoutParams();
-        brawery_margin.leftMargin = (int) (name_width + convertDpToPx(115));
-        holder.row_brawery_textView.setLayoutParams(brawery_margin);
-        holder.row_brawery_textView.requestLayout();
-        holder.row_brawery_textView.setText(beer.getBrawery());
+                (ViewGroup.MarginLayoutParams) holder.row_brewery_textView.getLayoutParams();
+        brawery_margin.leftMargin = (int) (convertDpToPx(115 + 8 * beer.getName().length()));
+        holder.row_brewery_textView.setLayoutParams(brawery_margin);
+        holder.row_brewery_textView.requestLayout();
+        holder.row_brewery_textView.setText(beer.getBrewery());
 
         ViewGroup.MarginLayoutParams ratingBar_margin =
                 (ViewGroup.MarginLayoutParams) holder.row_ratingBar.getLayoutParams();
-        ratingBar_margin.topMargin = (int)(name_height + convertDpToPx(24));
+        ratingBar_margin.topMargin = (int)(convertDpToPx(44));
         holder.row_ratingBar.setLayoutParams(ratingBar_margin);
         holder.row_ratingBar.requestLayout();
-        holder.row_ratingBar.setRating(beer.getNote());
+        holder.row_ratingBar.setRating(3.5f);
 
         float ratingBar_height = holder.row_ratingBar.getMeasuredHeight();
 
         ViewGroup.MarginLayoutParams sp_ll_margin =
                 (ViewGroup.MarginLayoutParams) holder.row_style_price_LL.getLayoutParams();
-        sp_ll_margin.topMargin = (int) (name_height + ratingBar_height + convertDpToPx(40));
+        sp_ll_margin.topMargin = (int) (convertDpToPx(60));
         holder.row_style_price_LL.setLayoutParams(sp_ll_margin);
         holder.row_style_price_LL.requestLayout();
 
@@ -76,14 +77,14 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
 
         ViewGroup.MarginLayoutParams pia_LL_margin =
                 (ViewGroup.MarginLayoutParams) holder.row_place_ibu_alc_LL.getLayoutParams();
-        pia_LL_margin.topMargin = (int) (name_height + ratingBar_height + sp_ll_height);
+        pia_LL_margin.topMargin = (int) (convertDpToPx(89));
         holder.row_place_ibu_alc_LL.setLayoutParams(pia_LL_margin);
         holder.row_place_ibu_alc_LL.requestLayout();
 
-        holder.row_place_textView.setText("Place: " + beer.getPlace());
-        holder.row_ibu_textView.setText("IBU: " + beer.getIBU());
+        holder.row_place_textView.setText("Place: " + beer.getWhereBought());
+        holder.row_ibu_textView.setText("IBU: " + beer.getIbu());
         holder.row_alc_textView.setText("Alc: " + beer.getAlc());
-        */
+
 
     }
 
@@ -98,7 +99,7 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
         public ImageView row_imageView;
 
         public TextView row_name_textView;
-        public TextView row_brawery_textView;
+        public TextView row_brewery_textView;
         public TextView row_style_textView;
         public TextView row_price_textView;
         public TextView row_place_textView;
@@ -115,7 +116,7 @@ public class BeerRecyclerViewAdapter extends RecyclerView.Adapter<BeerRecyclerVi
             row_imageView = (ImageView) itemView.findViewById(R.id.row_imageView);
 
             row_name_textView = (TextView) itemView.findViewById(R.id.row_name_textView);
-            row_brawery_textView = (TextView) itemView.findViewById(R.id.row_brewery_textView);
+            row_brewery_textView = (TextView) itemView.findViewById(R.id.row_brewery_textView);
             row_style_textView = (TextView) itemView.findViewById(R.id.row_style_textView);
             row_price_textView = (TextView) itemView.findViewById(R.id.row_price_textView);
             row_place_textView = (TextView) itemView.findViewById(R.id.row_place_textView);

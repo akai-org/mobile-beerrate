@@ -4,7 +4,7 @@
     android:id="@+id/recyclerView_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#CAB">
+    android:background="@drawable/rect_with_stroke">
 
     <ImageView
         android:id="@+id/row_imageView"

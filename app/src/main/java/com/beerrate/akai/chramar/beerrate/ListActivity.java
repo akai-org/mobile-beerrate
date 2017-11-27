@@ -28,6 +28,7 @@ import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.BeerRecycler
 import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.ClickListener;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
 
     private RecyclerView recyclerView;
     private BeerRecyclerViewAdapter adapter;
-    private List<Beer> beerList;
+    public ArrayList<Beer> beerList;
     private RecyclerView.LayoutManager layoutManager;
 
     private  float density;
@@ -78,152 +79,24 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        beerList = new ArrayList<Beer>();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
         ///Geting Beers List!!
-        beerList = new List<Beer>() {
-            @Override
-            public int size() {
-                return 1;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<Beer> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] ts) {
-                return null;
-            }
-
-            @Override
-            public boolean add(Beer beer) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends Beer> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int i, @NonNull Collection<? extends Beer> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public boolean equals(Object o) {
-                return false;
-            }
-
-            @Override
-            public int hashCode() {
-                return 0;
-            }
-
-            @Override
-            public Beer get(int i) {
-                return null;
-            }
-
-            @Override
-            public Beer set(int i, Beer beer) {
-                return null;
-            }
-
-            @Override
-            public void add(int i, Beer beer) {
-
-            }
-
-            @Override
-            public Beer remove(int i) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(Object o) {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<Beer> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<Beer> listIterator(int i) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<Beer> subList(int i, int i1) {
-                return null;
-            }
-        };
-        beerList.add(new Beer());
-
+        Log.d(MY_LOG, "84 ");
+        beerList.add(new Beer(1, "Piwo1", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(2, "Piwo2", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(3, "Piwo3", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(4, "Piwo4", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(5, "Piwo5", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        Log.d(MY_LOG, "86");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new BeerRecyclerViewAdapter(beerList, density);
         layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        Log.d("Kossa", "53");
-        if(adapter != null)
-            recyclerView.setAdapter(adapter);
+        Log.d("Kossa", "93");
+        recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(
                 new BeerRecyclerViewItemListener(
                         getApplicationContext(), recyclerView, this));
@@ -655,7 +528,7 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
         row_sp_ll = row.findViewById(R.id.row_style_price_LL);
 
         sp_ll_x_change = ValueAnimator.ofInt(
-                (int) convertDpToPx(220), (int) (name_height + ratingBar_height + convertDpToPx(40)));
+                (int) convertDpToPx(220), (int) (convertDpToPx(60)));
         sp_ll_x_change.setDuration(DURATION);
         sp_ll_x_change.setInterpolator(new AccelerateDecelerateInterpolator());
         sp_ll_x_change.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
