@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -114,9 +115,8 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
         beerList.add(new Beer(5, "Bosman", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
         for(int i = 0; i <  beerList.size(); i ++){
             allBeers.add(beerList.get(i));
-            namesList.add(beerList.get(i).getName());
-            namesList.add(beerList.get(i).getBrewery());
         }
+        Log.d(MY_LOG, "118");
         layoutAnimationController = AnimationUtils.loadLayoutAnimation(
                 getApplicationContext(), R.anim.row_anim);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -142,7 +142,7 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         if (searchView != null){
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
