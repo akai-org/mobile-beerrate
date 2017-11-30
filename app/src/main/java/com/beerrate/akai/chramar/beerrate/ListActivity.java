@@ -2,19 +2,26 @@ package com.beerrate.akai.chramar.beerrate;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
+import android.app.SearchManager;
+import android.content.Context;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,10 +36,7 @@ import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.ClickListene
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+
 
 public class ListActivity extends AppCompatActivity implements ClickListener {
 
@@ -40,14 +44,20 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
 
     private RecyclerView recyclerView;
     private BeerRecyclerViewAdapter adapter;
+    public ArrayList<Beer> allBeers;
     public ArrayList<Beer> beerList;
+    private ArrayList<String> namesList;
     private RecyclerView.LayoutManager layoutManager;
+    private android.support.v7.widget.Toolbar toolbar;
+    private ActionBar actionBar;
+    private LayoutAnimationController layoutAnimationController;
 
     private  float density;
     private float name_width;
     private float name_height;
     private int screen_width;
     private float ratingBar_height;
+    private SearchView searchView;
 
     private ImageView row_imageView;
     private TextView row_nanme_textView;
@@ -79,29 +89,100 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        toolbar = findViewById(R.id.recyclerList_toolbar);
+        setSupportActionBar(toolbar);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         beerList = new ArrayList<Beer>();
+        allBeers = new ArrayList<Beer>();
+
         density = getApplicationContext().getResources().getDisplayMetrics().density;
+
         ///Geting Beers List!!
-        Log.d(MY_LOG, "84 ");
-        beerList.add(new Beer(1, "Piwo1", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(2, "Piwo2", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(3, "Piwo3", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(4, "Piwo4", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(5, "Piwo5", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        Log.d(MY_LOG, "86");
+        beerList.add(new Beer(1, "Tyskie", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(2, "Żubr", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(3, "Tatra", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(4, "Preła eksport", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(5, "Lech", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(1, "Lech Pils", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(2, "Lech Premium", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(3, "Żywiec", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(4, "Piast", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(5, "Bosman", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        for(int i = 0; i <  beerList.size(); i ++){
+            allBeers.add(beerList.get(i));
+            namesList.add(beerList.get(i).getName());
+            namesList.add(beerList.get(i).getBrewery());
+        }
+        layoutAnimationController = AnimationUtils.loadLayoutAnimation(
+                getApplicationContext(), R.anim.row_anim);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new BeerRecyclerViewAdapter(beerList, density);
         layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutAnimation(layoutAnimationController);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        Log.d("Kossa", "93");
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(
                 new BeerRecyclerViewItemListener(
                         getApplicationContext(), recyclerView, this));
 
         adapter.notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_list_actions, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        if (searchView != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    findBeerByNameOrBrewery(query.toLowerCase());
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    findBeerByNameOrBrewery(newText.toLowerCase());
+                    return false;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void findBeerByNameOrBrewery(String query) {
+
+        beerList.clear();
+        if(query != "") {
+            for (int i = 0; i < allBeers.size(); i++) {
+                if (allBeers.get(i).getName().toLowerCase().contains(query)
+                        || allBeers.get(i).getBrewery().toLowerCase().contains(query)) {
+                    beerList.add(allBeers.get(i));
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
