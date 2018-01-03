@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.beerrate.akai.chramar.beerrate.test.TestActivity;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,7 +90,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(recycler);
 
         } else if (id == R.id.nav_slideshow) {
-
+            Intent recycler = new Intent(this, TestActivity.class);
+            startActivity(recycler);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
