@@ -6,4 +6,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_search">search_list</string>
+    <string name="all_beers">All Beers</string>
+    <string name="favoriteBeers">Favorite Beers</string>
 </resources>

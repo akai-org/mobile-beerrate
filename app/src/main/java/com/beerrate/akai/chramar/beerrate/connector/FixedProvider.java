@@ -13,11 +13,16 @@ class FixedProvider implements BeerDataProvider{
     private Random r = new Random();
 
     FixedProvider(){
-        beerList.add(new Beer(1,"name","inny","APA","Nie pamietam",12,12,4));
-        beerList.add(new Beer(1,"asd","agbs bx","APA","Nie pamietam",12,12,4));
-        beerList.add(new Beer(1,"hgfd","agrsv","APA","Nie pamietam",12,12,4));
-        beerList.add(new Beer(1,"stjntsr","arbs","APA","Nie pamietam",12,12,4));
-        beerList.add(new Beer(1,"sagrhtdrnn","sdfgsf","APA","Nie pamietam",12,12,4));
+        beerList.add(new Beer(1, "Tyskie", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(2, "Żubr", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(3, "Tatra", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(4, "Preła eksport", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(5, "Lech", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(6, "Lech Pils", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(7, "Lech Premium", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(8, "Żywiec", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(9, "Piast", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(10, "Bosman", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
     }
 
     @Override

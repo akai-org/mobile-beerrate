@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/rect_with_stroke">
+
+    <TextView
+        android:id="@+id/bestName_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:ellipsize="end"
+        android:maxWidth="130dp"
+        android:singleLine="false"
+        android:text="Name"
+        android:textAlignment="viewStart"
+        android:textSize="@dimen/big_text_size"
+        app:layout_constraintEnd_toStartOf="@id/best_imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/bestRatingBar"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:numStars="5"
+        app:layout_constraintEnd_toStartOf="@id/best_imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bestName_textView" />
+
+    <ImageView
+        android:id="@+id/best_imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/layoutComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:orientation="horizontal"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/best_imageView">
+
+        <ImageView
+            android:id="@+id/image_comment"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/ic_comment_accent_24dp" />
+
+        <TextView
+            android:id="@+id/commentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:text="Comment"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/normal_text_size" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutVote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:orientation="horizontal"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/layoutComment"
+        app:layout_constraintTop_toTopOf="@+id/layoutComment">
+
+        <ImageView
+            android:id="@+id/image_vote"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/ic_star_accent_24dp" />
+
+        <TextView
+            android:id="@+id/vote_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:text="Vote"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/normal_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/layoutVote"
+        app:layout_constraintTop_toTopOf="@+id/layoutVote">
+
+        <ImageView
+            android:id="@+id/favorite_imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+
