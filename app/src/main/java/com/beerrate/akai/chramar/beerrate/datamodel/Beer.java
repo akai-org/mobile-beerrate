@@ -1,6 +1,8 @@
 package com.beerrate.akai.chramar.beerrate.datamodel;
 
+
 public class Beer {
+
     private long id;
     private String name;
     private String brewery;
@@ -25,60 +27,60 @@ public class Beer {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getBrewery() {
         return brewery;
     }
 
-    public void setBrewery(String brewery) {
-        this.brewery = brewery;
-    }
-
     public String getStyle() {
         return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
     }
 
     public String getWhereBought() {
         return whereBought;
     }
 
-    public void setWhereBought(String whereBought) {
-        this.whereBought = whereBought;
-    }
-
     public int getIbu() {
         return ibu;
-    }
-
-    public void setIbu(int ibu) {
-        this.ibu = ibu;
     }
 
     public float getAlc() {
         return alc;
     }
 
-    public void setAlc(float alc) {
-        this.alc = alc;
-    }
-
     public float getPrice() {
         return price;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBrewery(String brewery) {
+        this.brewery = brewery;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public void setWhereBought(String whereBought) {
+        this.whereBought = whereBought;
+    }
+
+    public void setIbu(int ibu) {
+        this.ibu = ibu;
+    }
+
+    public void setAlc(float alc) {
+        this.alc = alc;
     }
 
     public void setPrice(float price) {

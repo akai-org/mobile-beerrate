@@ -4,10 +4,10 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.SearchManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +34,11 @@ import android.widget.Toast;
 import com.beerrate.akai.chramar.beerrate.Adapters.BeerRecyclerViewAdapter;
 import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.BeerRecyclerViewItemListener;
 import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.ClickListener;
+import com.beerrate.akai.chramar.beerrate.connector.ConnectorFacade;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ListActivity extends AppCompatActivity implements ClickListener {
@@ -45,8 +47,8 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
 
     private RecyclerView recyclerView;
     private BeerRecyclerViewAdapter adapter;
-    public ArrayList<Beer> allBeers;
-    public ArrayList<Beer> beerList;
+    public List<Beer> allBeers;
+    public List<Beer> beerList;
     private ArrayList<String> namesList;
     private RecyclerView.LayoutManager layoutManager;
     private android.support.v7.widget.Toolbar toolbar;
@@ -103,24 +105,13 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
         density = getApplicationContext().getResources().getDisplayMetrics().density;
 
         ///Geting Beers List!!
-        beerList.add(new Beer(1, "Tyskie", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(2, "Żubr", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(3, "Tatra", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(4, "Preła eksport", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(5, "Lech", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(1, "Lech Pils", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(2, "Lech Premium", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(3, "Żywiec", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(4, "Piast", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        beerList.add(new Beer(5, "Bosman", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
-        for(int i = 0; i <  beerList.size(); i ++){
-            allBeers.add(beerList.get(i));
-        }
+        beerList = new ConnectorFacade().getAll();
+        allBeers.addAll(beerList);
         Log.d(MY_LOG, "118");
         layoutAnimationController = AnimationUtils.loadLayoutAnimation(
                 getApplicationContext(), R.anim.row_anim);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        adapter = new BeerRecyclerViewAdapter(beerList, density);
+        adapter = new BeerRecyclerViewAdapter((ArrayList<Beer>) beerList, density);
         layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setLayoutManager(layoutManager);

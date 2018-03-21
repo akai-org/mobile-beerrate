@@ -1,12 +1,8 @@
 package com.beerrate.akai.chramar.beerrate.connector;
 
-import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
+/**
+ * Created by Programista on 21.03.2018.
+ */
 
-import java.util.List;
-
-interface BeerDataProvider {
-
-    Beer getBeerById(long id);
-    List<Beer> getAll();
-
+public interface BeerDataProvider {
 }
