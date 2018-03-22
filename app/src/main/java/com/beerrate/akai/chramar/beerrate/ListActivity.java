@@ -159,7 +159,7 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
     private void findBeerByNameOrBrewery(String query) {
 
         beerList.clear();
-        if(query != "") {
+        if(!query.isEmpty()) {
             for (int i = 0; i < allBeers.size(); i++) {
                 if (allBeers.get(i).getName().toLowerCase().contains(query)
                         || allBeers.get(i).getBrewery().toLowerCase().contains(query)) {
