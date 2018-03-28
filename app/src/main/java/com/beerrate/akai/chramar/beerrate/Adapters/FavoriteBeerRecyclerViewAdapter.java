@@ -3,7 +3,6 @@ package com.beerrate.akai.chramar.beerrate.Adapters;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,41 +11,35 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beerrate.akai.chramar.beerrate.FavoriteBeerActivity;
 import com.beerrate.akai.chramar.beerrate.MainActivity;
 import com.beerrate.akai.chramar.beerrate.R;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
-import java.util.List;
-
 /**
- * Created by Dominik on 07.03.2018.
+ * Created by Domink on 22.03.2018.
  */
 
-public class BestBeerRecyclerViewAdapter
-        extends RecyclerView.Adapter<BestBeerRecyclerViewAdapter.BestBeerViewHolder> {
+public class FavoriteBeerRecyclerViewAdapter extends
+        RecyclerView.Adapter<FavoriteBeerRecyclerViewAdapter.FavoriteBeerViewHolder> {
 
-    private List<Beer> beerArrayList;
-    //private ArrayList<String> favoriteBeers;
-    private MainActivity parentActivity;
+    private FavoriteBeerActivity parentActivity;
 
-    public BestBeerRecyclerViewAdapter(List<Beer> beerArrayList, MainActivity parentActivity) {
-        this.beerArrayList = beerArrayList;
+    public FavoriteBeerRecyclerViewAdapter(FavoriteBeerActivity parentActivity) {
         this.parentActivity = parentActivity;
-        // this.favoriteBeers = favoriteBeers;
     }
 
     @NonNull
     @Override
-    public BestBeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavoriteBeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.the_best_beer, parent, false);
-
-        return new BestBeerViewHolder(view);
+        return new FavoriteBeerViewHolder(view, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BestBeerViewHolder holder, int position) {
-        Beer beer = beerArrayList.get(position);
+    public void onBindViewHolder(@NonNull FavoriteBeerViewHolder holder, int position) {
+        Beer beer = MainActivity.favoriteBeers.get(position);
         holder.nameTextView.setText(String.valueOf(position + 1) + ". " + beer.getName());
         holder.ratingBar.setRating(3.5f);
         if (MainActivity.favoriteBeersNames.contains(beer.getName())) {
@@ -58,13 +51,13 @@ public class BestBeerRecyclerViewAdapter
 
     @Override
     public int getItemCount() {
-        return beerArrayList.size();
+        return MainActivity.favoriteBeers.size();
     }
 
-    public class BestBeerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class FavoriteBeerViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener {
 
-        private String MY_LOG = "Kossa";
-
+        private FavoriteBeerRecyclerViewAdapter adapter;
         private TextView commentTextView;
         private TextView voteTextView;
         private ImageView voteImageView;
@@ -75,7 +68,7 @@ public class BestBeerRecyclerViewAdapter
         private ImageView beerImageView;
         private ConstraintLayout layout;
 
-        public BestBeerViewHolder(View itemView) {
+        public FavoriteBeerViewHolder(View itemView, FavoriteBeerRecyclerViewAdapter adapter) {
             super(itemView);
             ratingBar = itemView.findViewById(R.id.bestRatingBar);
             nameTextView = itemView.findViewById(R.id.bestName_textView);
@@ -97,38 +90,21 @@ public class BestBeerRecyclerViewAdapter
             layout = itemView.findViewById(R.id.best_row);
             layout.setOnClickListener(this);
             layout.setOnLongClickListener(this);
+            this.adapter = adapter;
         }
 
         @Override
         public void onClick(View v) {
-            if(v.equals(commentImageView) || v.equals(commentTextView)) {
+            if (v.equals(commentImageView) || v.equals(commentTextView)) {
                 Toast.makeText(v.getContext(), "Comment", Toast.LENGTH_SHORT).show();
-            } else if(v.equals(voteImageView) || v.equals(voteTextView)) {
+            } else if (v.equals(voteImageView) || v.equals(voteTextView)) {
                 Toast.makeText(v.getContext(), "Vote", Toast.LENGTH_SHORT).show();
             } else if (v.equals(favoriteImageView)) {
-                boolean cont = false;
-                int i;
-                Log.d(MY_LOG, "114 BestBeerAdapter");
-
-                for (i = 0; i < MainActivity.favoriteBeers.size(); i++) {
-                    if (MainActivity.favoriteBeersNames.get(i).contentEquals(beerArrayList.get(getPosition()).getName())) {
-                        cont = true;
-                        break;
-                    }
-                }
-                if (cont) {
-                    Log.d(MY_LOG, "120 BestBeerAdapter");
-                    favoriteImageView.setImageResource(R.drawable.ic_favorite_border_accent_24dp);
-                    MainActivity.favoriteBeersNames.remove(i);
-                    MainActivity.favoriteBeers.remove(i);
-                } else {
-                    Log.d(MY_LOG, "125 BestBeerAdapter");
-                    favoriteImageView.setImageResource(R.drawable.ic_favorite_accent_24dp);
-                    MainActivity.favoriteBeersNames.add(beerArrayList.get(getPosition()).getName());
-                    MainActivity.favoriteBeers.add(beerArrayList.get(getPosition()));
-                }
-
+                MainActivity.favoriteBeers.remove(getPosition());
+                MainActivity.favoriteBeersNames.remove(getPosition());
+                adapter.notifyDataSetChanged();
                 Toast.makeText(v.getContext(), "Favorite " + getPosition(), Toast.LENGTH_SHORT).show();
+
             } else {
                 parentActivity.startDataActivity(getPosition());
             }

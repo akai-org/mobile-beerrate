@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/AppTheme"
+    android:background="#5123"
+    tools:context="com.beerrate.akai.chramar.beerrate.FavoriteBeerActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/app_bar_favorite"
+            layout="@layout/recyclerview_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- <GridView
+             android:gravity="center_horizontal"
+             android:layout_marginHorizontal="@dimen/margin"
+             android:id="@+id/gridView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="?attr/actionBarSize"
+             android:columnWidth="150dp"
+             android:verticalSpacing="8dp"
+             android:horizontalSpacing="8dp"
+             android:numColumns="2" />-->
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/favoriteBeer_recyclerView"
+            android:layout_marginTop="?attr/actionBarSize">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_favorite"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_white_24dp" />
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

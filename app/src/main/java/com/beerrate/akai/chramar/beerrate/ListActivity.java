@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -29,16 +30,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beerrate.akai.chramar.beerrate.Adapters.BeerRecyclerViewAdapter;
 import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.BeerRecyclerViewItemListener;
 import com.beerrate.akai.chramar.beerrate.RecyclerViewClickListener.ClickListener;
-import com.beerrate.akai.chramar.beerrate.connector.ConnectorFacade;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.beerrate.akai.chramar.beerrate.Constants.ID;
+import static com.beerrate.akai.chramar.beerrate.Constants.NAME;
 
 
 public class ListActivity extends AppCompatActivity implements ClickListener {
@@ -105,7 +107,9 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
         density = getApplicationContext().getResources().getDisplayMetrics().density;
 
         ///Geting Beers List!!
-        beerList = new ConnectorFacade().getAll();
+        beerList = MainActivity.beerList;
+        //beerList = new ConnectorFacade().getAll();
+
         allBeers.addAll(beerList);
         Log.d(MY_LOG, "118");
         layoutAnimationController = AnimationUtils.loadLayoutAnimation(
@@ -159,7 +163,7 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
     private void findBeerByNameOrBrewery(String query) {
 
         beerList.clear();
-        if(query != "") {
+        if (query.isEmpty()) {
             for (int i = 0; i < allBeers.size(); i++) {
                 if (allBeers.get(i).getName().toLowerCase().contains(query)
                         || allBeers.get(i).getBrewery().toLowerCase().contains(query)) {
@@ -178,7 +182,17 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(getApplicationContext(),"CLick", Toast.LENGTH_SHORT).show();
+        Bundle b = new Bundle();
+        Beer beer = beerList.get(recyclerView.getChildAdapterPosition(view));
+        b.putString(NAME, beer.getName());
+        b.putLong(ID, beer.getId());
+        /*Toast.makeText(
+                getApplicationContext(),
+                "Clicked " + recyclerView.getChildAdapterPosition(view), Toast.LENGTH_SHORT).show();
+*/
+        Intent intent = new Intent(this, DataActivity.class);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     @Override
@@ -685,4 +699,9 @@ public class ListActivity extends AppCompatActivity implements ClickListener {
         return px;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        adapter.notifyDataSetChanged();
+    }
 }

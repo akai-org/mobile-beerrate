@@ -20,21 +20,29 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.beerrate.akai.chramar.beerrate.Adapters.BestBeerRecyclerViewAdapter;
 import com.beerrate.akai.chramar.beerrate.connector.ConnectorFacade;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.beerrate.akai.chramar.beerrate.Constants.BEERS_NUM;
+import static com.beerrate.akai.chramar.beerrate.Constants.FAVORITE_BEER;
+import static com.beerrate.akai.chramar.beerrate.Constants.ID;
+import static com.beerrate.akai.chramar.beerrate.Constants.MY_LOG;
+import static com.beerrate.akai.chramar.beerrate.Constants.NAME;
+import static com.beerrate.akai.chramar.beerrate.Constants.PREF;
+
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String MY_LOG = "Kossa";
-    public static final String PREF = "BeerPreferences";
-    public static final String BEERS_NUM = "BeersNumber";
-    public static final String FAVORITE_BEER = "FB";
+
+    public static List<Beer> beerList;
+    public static ArrayList<String> favoriteBeersNames;
+    public static ArrayList<Beer> favoriteBeers;
 
     private FloatingActionButton fab;
     private DrawerLayout drawer;
@@ -45,7 +53,6 @@ public class MainActivity extends AppCompatActivity
     private BestBeerRecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Beer> theBest;
-    public static ArrayList<String> favoriteBeers;
     private ActionBar actionBar;
     private ConnectorFacade connectorFacade;
 
@@ -57,22 +64,40 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        beerList = new ArrayList<>();
+        beerList.add(new Beer(1, "Tyskie", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(2, "Żubr", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(3, "Tatra", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(4, "Preła eksport", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(5, "Lech", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(6, "Lech Pils", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(7, "Lech Premium", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(8, "Żywiec", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(9, "Piast", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
+        beerList.add(new Beer(10, "Bosman", "Lech", "Jasne", "Polska", 10, 5.5f, 2.6f));
 
         preferences = getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
 
 
         connectorFacade = new ConnectorFacade();
-        theBest = connectorFacade.getAll();
-
+        theBest = beerList;
+        //theBest = connectorFacade.getAll();
         favoriteBeers = new ArrayList<>();
+        favoriteBeersNames = new ArrayList<>();
         int fn = preferences.getInt(BEERS_NUM, 0);
 
         favoriteBeers.clear();
         for (int i = 0; i < fn; i++) {
             String name = preferences.getString(FAVORITE_BEER + i, "");
-            if (!name.contentEquals("")) {
-                favoriteBeers.add(name);
+            if (!name.isEmpty()) {
+                favoriteBeersNames.add(name);
+                for (int j = 0; j < beerList.size(); j++) {
+                    if (beerList.get(j).getName().compareTo(name) == 0) {
+                        favoriteBeers.add(beerList.get(j));
+                        Log.d(MY_LOG, "Name = " + name);
+                    }
+                }
             }
         }
 
@@ -95,8 +120,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(MY_LOG, 95 + "");
 
         mainActivityRecyclerView = findViewById(R.id.bestBeer_recyclerView);
-        adapter = new BestBeerRecyclerViewAdapter(theBest, favoriteBeers,
-                getApplicationContext().getResources().getDisplayMetrics().density);
+        adapter = new BestBeerRecyclerViewAdapter(theBest, this);
         layoutManager = new LinearLayoutManager(getApplicationContext());
 
         mainActivityRecyclerView.setLayoutManager(layoutManager);
@@ -157,7 +181,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(recycler);
         } else if(id ==  R.id.nav_favoriteBeers) {
             //Otwieranie Activity z ulubionymi piwami
-            Toast.makeText(getApplicationContext(), "Favorite Beers", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Favorite Beers", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, FavoriteBeerActivity.class);
+            startActivity(intent);
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -168,22 +194,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        favoriteBeers.clear();
-        int fn = preferences.getInt(BEERS_NUM, 0);
-
-        for (int i = 0; i < fn; i++) {
-            String name = preferences.getString(FAVORITE_BEER + i, "");
-            if (!name.contentEquals("")) {
-                favoriteBeers.add(name);
-            }
-        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         for (int i = 0; i < favoriteBeers.size(); i++) {
-            editor.putString(FAVORITE_BEER + i, favoriteBeers.get(i));
+            editor.putString(FAVORITE_BEER + i, favoriteBeersNames.get(i));
         }
         Log.d(MY_LOG, "Fb length = " + favoriteBeers.size());
         editor.putInt(BEERS_NUM, favoriteBeers.size());
@@ -194,10 +212,26 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         for (int i = 0; i < favoriteBeers.size(); i++) {
-            editor.putString(FAVORITE_BEER + i, favoriteBeers.get(i));
+            editor.putString(FAVORITE_BEER + i, favoriteBeersNames.get(i));
         }
         Log.d(MY_LOG, "Fb length = " + favoriteBeers.size());
         editor.putInt(BEERS_NUM, favoriteBeers.size());
         editor.commit();
+    }
+
+
+    public void startDataActivity(int beerNumber) {
+        Beer beer = beerList.get(beerNumber);
+
+        Bundle b = new Bundle();
+        b.putString(NAME, beer.getName());
+        b.putLong(ID, beer.getId());
+        /*Toast.makeText(
+                getApplicationContext(),
+                "Clicked " + recyclerView.getChildAdapterPosition(view), Toast.LENGTH_SHORT).show();
+*/
+        Intent intent = new Intent(this, DataActivity.class);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 }
