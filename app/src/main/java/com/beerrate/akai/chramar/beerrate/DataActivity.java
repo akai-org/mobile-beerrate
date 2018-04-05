@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.beerrate.akai.chramar.beerrate.datamodel.Beer;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.beerrate.akai.chramar.beerrate.Constants.NAME;
 
@@ -50,28 +51,21 @@ public class DataActivity extends AppCompatActivity {
         String name = b.getString(NAME);
         long id = b.getLong(NAME);
         Beer clickedBeer = null;
+
         //Kliknięte piwo
         if (name != null) {
             List<Beer> beers = MainActivity.beerList;
-            for (Beer beer : beers) {
-                if (beer.getName().compareTo(name) == 0) {
-                    clickedBeer = beer;
-                    break;
-                }
-            }
-            if (clickedBeer != null) {
-                Toast.makeText(getApplicationContext(), clickedBeer.getName(), Toast.LENGTH_SHORT);
-            } else {
-                finish();
-            }
-        } else {
-            finish();
+            clickedBeer = beers.stream()
+                    .filter(beer1 -> beer1.getName().compareTo(name)==0)
+                    .findFirst()
+                    .get();
         }
+        else finish();
         ///end of Dominik k
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -84,9 +78,6 @@ public class DataActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        ///Dodane do testów
-        toolbar.setTitle(clickedBeer.getName());
     }
 
 
@@ -166,7 +157,6 @@ public class DataActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
             return 2;
         }
     }
