@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-mobile-beerrate.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-mobile-beerrate.iml" group="mobile-beerrate" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mobile-beerrate.iml" filepath="$PROJECT_DIR$/mobile-beerrate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mobile-beerrate-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mobile-beerrate-app.iml" group="mobile-beerrate/app" />
     </modules>
   </component>
 </project>
