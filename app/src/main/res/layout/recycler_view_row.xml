@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recyclerView_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_with_stroke">
+
+    <ImageView
+        android:id="@+id/row_imageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="@dimen/margin"
+        android:background="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/row_name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="30dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/white"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/row_brewery_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="30dp"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="150dp"
+        android:text="Brawery"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/white"/>
+
+    <RatingBar
+        android:id="@+id/row_ratingbar"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="99dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:isIndicator="true"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="0.5" />
+
+
+
+    <LinearLayout
+        android:id="@+id/row_style_price_LL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/row_style_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:layout_margin="@dimen/margin"
+            android:text="Style: style"
+            android:textSize="@dimen/little_text_size"/>
+
+        <TextView
+            android:id="@+id/row_price_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:layout_margin="@dimen/margin"
+            android:text="Price : 15 zł"
+            android:textSize="@dimen/little_text_size"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row_place_ibu_alc_LL"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_marginTop="89dp"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/row_place_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:layout_margin="@dimen/margin"
+            android:text="Place: place"
+            android:textSize="@dimen/normal_text_size"/>
+
+        <TextView
+            android:id="@+id/row_ibu_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:layout_margin="@dimen/margin"
+            android:text="IBU: 5"
+            android:textSize="@dimen/normal_text_size"/>
+
+        <TextView
+            android:id="@+id/row_alc_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:layout_margin="@dimen/margin"
+            android:text="Alc : 10 %"
+            android:textSize="@dimen/normal_text_size"/>
+
+    </LinearLayout>
+
+</FrameLayout>
