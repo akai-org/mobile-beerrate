@@ -1,4 +1,4 @@
 # mobile-beerrate
 
 
-![](https://github.com/akai-org/mobile-beerrate/main.png)
+![Main](https://github.com/akai-org/mobile-beerrate/main.png)
